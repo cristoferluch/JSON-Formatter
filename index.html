@@ -19,7 +19,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            
+
         }
 
         html,
@@ -114,8 +114,8 @@
 
         boxJson.on('change', () => {
             try {
-                const obj = JSON.parse(boxJson.getValue());
-                boxJsonIndent.setValue(JSON.stringify(obj, null, 4));
+                const json = JSON.parse(boxJson.getValue());
+                boxJsonIndent.setValue(JSON.stringify(json, null, 4));
             } catch (e) {
                 boxJsonIndent.setValue('JSON inválido');
             }
