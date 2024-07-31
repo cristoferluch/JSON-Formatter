@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closetag.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: rgb(40, 40, 40);
+        }
+
+        body {
+            display: flex;
+        }
+
+        .container {
+            width: calc(50vw - 20px);
+            height: calc(100vh - 20px);
+            margin: 10px;
+            outline: none;
+        }
+
+        .CodeMirror {
+            height: 100%;
+
+        }
+
+        #btn_copy {
+            padding: 5px;
+            background: forestgreen;
+            color: whitesmoke;
+            border-radius: 3px;
+            position: absolute;
+            z-index: 9999;
+            right: 40px;
+            top: 20px;
+            user-select: none;
+        }
+
+        #btn_copy:hover {
+            background: rgb(19, 109, 19);
+            transition: .3s;
+            cursor: pointer;
+        }
+
+        .CodeMirror-scrollbar-filler {
+            background: #1e1e1e;
+        }
+
+        *::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        *::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            background-color: #8f54a0;
+            border-radius: 4px;
+            border: 3px solid #1e1e1e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="box-json"></div>
+    <div class="container" id="box-json-indent">
+        <div id="btn_copy">Copiar</div>
+    </div>
+
+    <script>
+
+        const btn_copy = document.querySelector('#btn_copy');
+
+        const boxJson = CodeMirror(document.getElementById('box-json'), {
+            mode: 'application/json',
+            theme: 'dracula',
+            lineNumbers: true,
+            autoCloseTags: true,
+            autoCloseBrackets: true
+        });
+
+        const boxJsonIndent = CodeMirror(document.getElementById('box-json-indent'), {
+            mode: 'application/json',
+            theme: 'dracula',
+            lineNumbers: true,
+            autoCloseTags: true,
+            autoCloseBrackets: true,
+            readOnly: true
+        });
+
+        boxJson.on('change', () => {
+            try {
+                const obj = JSON.parse(boxJson.getValue());
+                boxJsonIndent.setValue(JSON.stringify(obj, null, 4));
+            } catch (e) {
+                boxJsonIndent.setValue('JSON inválido');
+            }
+        });
+
+        btn_copy.addEventListener('click', () => {
+            navigator.clipboard.writeText(boxJsonIndent.getValue())
+                .then(() => {
+                    btn_copy.innerHTML = 'JSON copiado';
+                    setTimeout(() => {
+                        btn_copy.innerHTML = 'Copiar JSON Formatado';
+                    }, 1000);
+                })
+                .catch(err => {
+                    console.error('Erro ao copiar JSON:', err);
+                });
+        });
+
+    </script>
+</body>
+
+</html>
