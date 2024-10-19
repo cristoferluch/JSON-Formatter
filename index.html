@@ -5,135 +5,238 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Formatter</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closetag.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/addon/edit/closebrackets.min.js"></script>
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    <link rel="icon" type="image/png" href="./favicon/favicon-48x48.png" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="./favicon/favicon.svg" />
+    <link rel="shortcut icon" href="./favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="./favicon/site.webmanifest" />
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <link rel="stylesheet" href="./styles/styles.css">
+    <script src="./scripts/codemirror.min.js"></script>
+    <script src="./scripts/javascript.min.js"></script>
+    <script src="./scripts/active-line.min.js"></script>
+    <script src="./scripts/brace-fold.min.js"></script>
+    <script src="./scripts/dialog.min.js"></script>
+    <script src="./scripts/jump-to-line.min.js"></script>
+    <script src="./scripts/searchcursor.min.js"></script>
+    <script src="./scripts/search.min.js"></script>
 
-        }
+    <script src="./scripts/foldcode.min.js"></script>
+    <script src="./scripts/foldgutter.min.js"></script>
+    <script src="./scripts/jsonlint.min.js"></script>
+    <script src="./scripts/lint.min.js"></script>
+    <script src="./scripts/json-lint.min.js"></script>
+    <script src="./scripts/jquery-3.7.1.min.js"></script>
+    <script src="./scripts/sweetalert2@11.js"></script>
+    <script src="./scripts/popper.min.js"></script>
+    <script src="./scripts/tippy-bundle.umd.min.js"></script>
 
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            background: rgb(40, 40, 40);
-        }
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/comic-mono@0.0.1/index.css">
 
-        body {
-            display: flex;
-        }
-
-        .container {
-            width: calc(50vw - 20px);
-            height: calc(100vh - 20px);
-            margin: 10px;
-            outline: none;
-        }
-
-        .CodeMirror {
-            height: 100%;
-
-        }
-
-        #btn_copy {
-            padding: 5px;
-            background: forestgreen;
-            color: whitesmoke;
-            border-radius: 3px;
-            position: absolute;
-            z-index: 9999;
-            right: 40px;
-            top: 20px;
-            user-select: none;
-            transition: .3s;
-            font-family: "Poppins", sans-serif;
-        }
-
-        #btn_copy:hover {
-            background: rgb(19, 109, 19);
-            transition: .3s;
-            cursor: pointer;
-        }
-
-        .CodeMirror-scrollbar-filler {
-            background: #1e1e1e;
-        }
-
-        *::-webkit-scrollbar {
-            width: 16px;
-        }
-
-        *::-webkit-scrollbar-track {
-            background: #1e1e1e;
-        }
-
-        *::-webkit-scrollbar-thumb {
-            background-color: #8f54a0;
-            border-radius: 4px;
-            border: 3px solid #1e1e1e;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="container" id="box-json"></div>
-    <div class="container" id="box-json-indent">
-        <div id="btn_copy">Copiar</div>
+
+    <div class="container" id="container-json">
+        <i class="bi bi-copy" id="btn_copy" style="top: 20px;right: 70px;"></i>
+        <i class="bi bi-gear" id="btn_settings" style="top: 20px;right: 30px;"></i>
+    </div>
+
+    <div class="container-settings">
+        <div>
+            <div>
+                <label for="font">Fonts</label>
+                <select name="font" id="font" onchange="handleChange()">
+                    <option value="Cascadia Code">Cascadia Code</option>
+                    <option value="Comic Mono">Comic Mono</option>
+                    <option value="Fira Code">Fira Code</option>
+                </select>
+            </div>
+            <div>
+                <label for="size">Size</label>
+                <select name="size" id="size" onchange="handleChange()">
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                    <option value="12">12</option>
+                    <option value="14">14</option>
+
+                </select>
+            </div>
+            <div>
+                <label for="theme">Themes</label>
+                <select name="theme" id="theme" onchange="handleChange()">
+                    <option value="ayu-dark">ayu-dark</option>
+                    <option value="darcula">darcula</option>
+                    <option value="dracula">dracula</option>
+                    <option value="material">material</option>
+                    <option value="mdn-like">mdn-like</option>
+                </select>
+            </div>
+            <div>
+                <label for="indent">Indent</label>
+                <select name="indent" id="indent" onchange="handleChange()">
+                    <option value="2">2 tab space</option>
+                    <option value="3">3 tab space</option>
+                    <option value="4">4 tab space</option>
+                </select>
+            </div>
+            <div style="justify-content: center;gap: 10px;margin-top: 5px;">
+                <a href="JavaScript:showAbout()">About</a>
+                <a href="JavaScript:showHelp()">Help</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-help">
+        <p><span class="shortcut">Ctrl-F / Cmd-F</span> -> Start searching</p>
+        <p><span class="shortcut">Ctrl-G / Cmd-G</span> -> Find next</p>
+        <p><span class="shortcut">Shift-Ctrl-G / Shift-Cmd-G</span> -> Find previous</p>
+        <p><span class="shortcut">Shift-Ctrl-F / Cmd-Option-F</span> -> Replace</p>
+        <p><span class="shortcut">Shift-Ctrl-R / Shift-Cmd-Option-F</span> -> Replace all</p>
+        <p><span class="shortcut">Alt-F</span> -> Persistent search (dialog doesn't autoclose, enter to find next, Shift-Enter to find previous)</p>
+        <p><span class="shortcut">Alt-G</span> -> Jump to line</p>
+    </div>
+
+    <div class="container-about" style="width:330px;min-height:60px;">
+        <p>Created by Cristofer Luchtenberg</p>
+        <p>GitHub: <a href="https://github.com/cristoferluch">cristoferluch</a></p>
     </div>
 
     <script>
 
-        const btn_copy = document.querySelector('#btn_copy');
+        // Default
+        let selectedFont = localStorage.getItem('font') || "Cascadia Code";
+        let selectedSize = localStorage.getItem('size') || "12";
+        let selectedTheme = localStorage.getItem('theme') || "material";
+        let selectedIndent = localStorage.getItem('indent') || 4;
 
-        const boxJson = CodeMirror(document.getElementById('box-json'), {
+        const containerJson = CodeMirror(document.getElementById('container-json'), {
             mode: 'application/json',
-            theme: 'dracula',
+            theme: selectedTheme,
             lineNumbers: true,
-            autoCloseTags: true,
-            autoCloseBrackets: true
+            lineWrapping: true,
+            styleActiveLine: true,
+            lint: true,
+            gutters: ["CodeMirror-lint-markers", "CodeMirror-foldgutter"],
+            foldGutter: true,
+            extraKeys: {"Alt-F": "findPersistent"}
         });
 
-        const boxJsonIndent = CodeMirror(document.getElementById('box-json-indent'), {
-            mode: 'application/json',
-            theme: 'dracula',
-            lineNumbers: true,
-            autoCloseTags: true,
-            autoCloseBrackets: true,
-            readOnly: true
-        });
+        syncSelectOptions()
+        updatePage();
 
-        boxJson.on('change', () => {
+        containerJson.on('change', formatJson);
+
+        function formatJson() {
             try {
-                const json = JSON.parse(boxJson.getValue());
-                boxJsonIndent.setValue(JSON.stringify(json, null, 4));
+                const currentValue = containerJson.getValue().trim();
+                if (currentValue.trim() !== '') {
+                    const json = JSON.parse(currentValue);
+                    const formattedJson = JSON.stringify(json, null, parseInt(selectedIndent));
+                    if (currentValue !== formattedJson) {
+                        containerJson.setValue(formattedJson);
+                    }
+                }
             } catch (e) {
-                boxJsonIndent.setValue('JSON inválido');
+            }
+        }
+
+        function handleChange() {
+            selectedFont = $('#font').val();
+            selectedSize = $('#size').val();
+            selectedTheme = $('#theme').val();
+            selectedIndent = parseInt($('#indent').val());
+
+            localStorage.setItem('font', selectedFont);
+            localStorage.setItem('size', selectedSize);
+            localStorage.setItem('theme', selectedTheme);
+            localStorage.setItem('indent', selectedIndent);
+
+            updatePage();
+        }
+
+        function updatePage() {
+            if(selectedTheme == 'mdn-like'){
+                $('.bi').css("color", "black");
+            } else {
+                $('.bi').css("color", "white");
+            }
+
+            $('.CodeMirror').css("font-family", selectedFont);
+            $('.CodeMirror').css("font-size", selectedSize + 'pt');
+            containerJson.setOption('theme', selectedTheme);
+            containerJson.setOption('tabSize', selectedIndent);
+            formatJson();
+        }
+
+        function syncSelectOptions() {
+            $('#font').val(selectedFont);
+            $('#size').val(selectedSize);
+            $('#theme').val(selectedTheme);
+            $('#indent').val(selectedIndent);
+        }
+
+        $('#btn_copy').on('click', () => {
+            navigator.clipboard.writeText(containerJson.getValue())
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 1000,
+                timerProgressBar: true,
+                customClass: {
+                    popup: 'colored-toast',
+                },
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "The code has been copied to clipboard."
+            });
+
+        });
+
+        function showHelp(){
+            $('.container-help').toggle(25);
+           
+            if($('.container-about').is(':visible')){
+                $('.container-about').hide();
+            }
+        }
+
+        function showAbout(){
+            $('.container-about').toggle(25);
+
+            if($('.container-help').is(':visible')){
+                $('.container-help').hide();
+            }
+        }
+
+        $('#btn_settings').on('click', () => {
+            $('.container-settings').toggle(25);
+    
+     
+            if ($('.container-settings').is(':visible')) {
+                $('#font').focus();
+                $('.container-help').hide();
+                $('.container-about').hide();
             }
         });
 
-        btn_copy.addEventListener('click', () => {
-            navigator.clipboard.writeText(boxJsonIndent.getValue())
-                .then(() => {
-                    btn_copy.innerHTML = 'JSON copiado';
-                    btn_copy.style.background = 'orange';
-                    setTimeout(() => {
-                        btn_copy.innerHTML = 'Copiar';
-                        btn_copy.style.background = 'forestgreen';
-                    }, 1500);
-                })
-                .catch(err => {
-                    console.error('Erro ao copiar JSON:', err);
-                });
+        tippy('#btn_copy', {
+            content: 'Copy JSON to clipboard',
+            animation: 'scale',
+        });
+
+        tippy('#btn_settings', {
+            content: 'Settings',
+            animation: 'scale',
         });
 
     </script>
