@@ -137,6 +137,10 @@ body {
     color: #d0adf0;
 }
 
+.tippy-box{
+    font-family: 'Cascadia Code', sans-serif;
+}
+
 @media screen and (max-width: 500px) {
     .container-help {
         width: 350px;
