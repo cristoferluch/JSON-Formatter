@@ -1,26 +1,19 @@
-@import url('codemirror.min.css');
-@import url('../themes/dracula.min.css');
-@import url('../themes/darcula.min.css');
-@import url('../themes/material.min.css');
-@import url('../themes/ayu-dark.min.css');
-@import url('../themes/mdn-like.min.css');
 @import url('./scale.css');
-@import url('./dialog.min.css');
-@import url('./foldgutter.min.css');
-@import url('./lint.min.css');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
 @import url('https://fonts.cdnfonts.com/css/cascadia-code');
 
 :root {
     color-scheme: dark;
 }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     width: 100vw;
     height: 100vh;
     background: rgb(40, 40, 40);
@@ -36,37 +29,36 @@ body {
     width: 100%;
 }
 
-.CodeMirror {
-    height: 100%;
-    width: 100%;
-    
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
+#editor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-.bi{
+.bi {
     z-index: 1;
     position: absolute;
-    font-size:20pt;
+    font-size: 20pt;
 }
 
-.bi:hover{
+.bi:hover {
     cursor: pointer;
 }
 
-.cm-s-material .CodeMirror-activeline-background{
+.cm-s-material .CodeMirror-activeline-background {
     background-color: rgb(0 0 0 / 15%);
 }
 
-.colored-toast{
+.colored-toast {
     font-family: 'Cascadia Code', sans-serif;
-    background: #ffffff;
+    background: whitesmoke;
 }
 
 .container-settings {
     min-height: 182px;
-    background: #ffffff;
+    background: whitesmoke;
     position: absolute;
     right: 30px;
     top: 60px;
@@ -80,7 +72,7 @@ body {
     font-family: 'Cascadia Code', sans-serif;
 }
 
-.container-settings select{
+.container-settings select {
     background: #3b3b3b;
     width: 150px;
     border: none;
@@ -90,12 +82,12 @@ body {
     cursor: pointer;
 }
 
-.container-settings label{
+.container-settings label {
     text-align: end;
     width: 60px;
 }
 
-.container-settings div{
+.container-settings div {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,7 +95,7 @@ body {
     gap: 5px;
 }
 
-.container-settings div div{
+.container-settings div div {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -113,16 +105,16 @@ body {
     font-size: 12pt;
 }
 
-.container-settings a{
+.container-settings a {
     color: #d0adf0;
 }
 
-.container-help, .container-about{
+.container-about {
     display: none;
     position: absolute;
     width: 500px;
     min-height: 209px;
-    background: #ffffff;
+    background: whitesmoke;
     color: black;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     transition: .5s;
@@ -133,16 +125,73 @@ body {
     font-family: 'Cascadia Code', sans-serif;
 }
 
-.shortcut{
+.shortcut {
     color: #d0adf0;
 }
 
-.tippy-box{
+.tippy-box {
     font-family: 'Cascadia Code', sans-serif;
+}
+
+.ace_search{
+    background: #181818;
+    border: none;
+    border-left: 4px solid #3b3b3b;
+    border-radius: 0px;
+}
+
+.ace_search.right{
+    border-radius: 0px;
+}
+
+.ace_search_field{
+    background: none;
+    border: none;
+    border-radius: 0px;
+    color: #8f8f8f;
+    border: 1px solid #141414;
+    transition: .1s;
+}
+
+.ace_search_field:focus{
+    border: 1px solid #3b3b3b;
+}
+
+.ace_searchbtn{
+    background:  none;
+    border: none;
+    transition: .3s;
+    border-radius: 5px;
+    margin-left: 1px;
+    color: #8f8f8f;
+}
+
+.ace_searchbtn:last-child{
+    border: none;
+    border-radius: 5px;
+}
+
+.ace_searchbtn:hover, .ace_button:hover{
+    background: #2b2b2b;
+}
+
+.ace_button{
+    color: #8f8f8f;
+    transition: .3s;
+}
+
+.ace_search_form.ace_nomatch {
+    outline: 1px solid #a33333;
 }
 
 @media screen and (max-width: 500px) {
     .container-help {
         width: 350px;
     }
-  }
+}
+
+
+.drag-over {
+    border: 2px dashed #0087F7;
+    background-color: rgba(0, 135, 247, 0.1);
+}
