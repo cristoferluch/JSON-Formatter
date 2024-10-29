@@ -1,6 +1,6 @@
 let selectedFont = localStorage.getItem('font') || "Cascadia Code";
 let selectedSize = localStorage.getItem('size') || "12";
-let selectedTheme = localStorage.getItem('theme') || "material";
+let selectedTheme = localStorage.getItem('theme') || "monokai";
 let selectedIndent = parseInt(localStorage.getItem('indent') || 4);
 let isIndenting = false;
 
