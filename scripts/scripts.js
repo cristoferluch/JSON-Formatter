@@ -22,6 +22,7 @@ updatePage();
 
 $('#btn_copy').on('click', copyToClipboard);
 $('#btn_settings').on('click', toggleSettings);
+$('#btn_download').on('click', handleDownload);
 
 editor.session.on('change', indentJson);
 
@@ -45,7 +46,9 @@ editorContainer.addEventListener("drop", (e) => {
 function indentJson() {
 
     if (isIndenting) return;
-    const currentValue = editor.getValue();
+
+    const currentValue = editor.getValue().trim();
+
     try {
         isIndenting = true;
         const json = JSON.parse(currentValue);
@@ -55,7 +58,7 @@ function indentJson() {
             editor.setValue(formattedJson, -1);
         }
     } catch (e) {
-
+      
     } finally {
         isIndenting = false;
     }
@@ -87,6 +90,13 @@ function handleFileDrop(event) {
         };
         reader.readAsText(file);
     }
+}
+
+function handleDownload() {
+    const url = document.createElement("a");
+    url.download = "json_" + Date.now() + ".json";
+    url.href = URL.createObjectURL(new Blob([editor.getValue().trim()]));
+    url.click()
 }
 
 function updatePage() {
@@ -153,5 +163,10 @@ tippy('#btn_copy', {
 
 tippy('#btn_settings', {
     content: 'Settings',
+    animation: 'scale',
+});
+
+tippy('#btn_download', {
+    content: 'Download',
     animation: 'scale',
 });

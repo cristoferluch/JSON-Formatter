@@ -29,9 +29,10 @@
 
     <div id="editor"></div>
 
-    <div class="container" id="container-json">
-        <i class="bi bi-copy" id="btn_copy" style="top: 20px;right: 70px;"></i>
-        <i class="bi bi-gear" id="btn_settings" style="top: 20px;right: 30px;"></i>
+    <div id="container-json">
+        <div><i class="bi bi-file-earmark-arrow-down" id="btn_download"></i></div>
+        <div><i class="bi bi-copy" id="btn_copy"></i></div>
+        <div><i class="bi bi-gear" id="btn_settings"></i></div>
     </div>
 
     <div class="container-settings">
@@ -67,12 +68,12 @@
                     <option value="one_dark">One Dark</option>
                     <option value="tomorrow_night_eighties">Tomorrow Night 80s</option>
                     <option value="twilight">Twilight</option>
-
                 </select>
             </div>
             <div>
                 <label for="indent">Indent</label>
                 <select name="indent" id="indent" onchange="handleChange()">
+                    <option value="0">Minify</option>
                     <option value="2">2 tab space</option>
                     <option value="3">3 tab space</option>
                     <option value="4">4 tab space</option>
